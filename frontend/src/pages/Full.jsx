@@ -18,7 +18,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
 
     const videoRef1 = useRef(null);
     const videoRef2 = useRef(null);
-    const [isChatOpen, setIsChatOpen] = useState(false);
+    const [isChatOpen, setIsChatOpen] = useState(true);
     const [zoom, setZoom] = useState("");
     const [isConnecting, setIsConnecting] = useState(true);
     const [isSearching, setIsSearching] = useState(false);
@@ -323,7 +323,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
 
             {/* Chat Box */}
             <div
-                className={`transition-all duration-300 ease-in-out absolute top-0 right-0 shadow-lg flex flex-col justify-between w-[100%] md:max-w-[450px] min-h-[100dvh] overflow-hidden rounded-l-xl px-4 gap-3 z-[150] pb-4 bg-white border-l border-gray-200
+                className={`transition-all duration-300 ease-in-out absolute top-0 right-0 shadow-lg flex flex-col justify-between w-[100%] md:max-w-[450px] h-[100dvh] overflow-hidden rounded-l-xl px-4 gap-3 z-[150] pb-4 bg-white border-l border-gray-200
                     ${isChatOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
             >
 
@@ -345,7 +345,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                 </div>
 
                 {/* Chat messages */}
-                <div className='flex-1 pt-4 pb-4 rounded-xl overflow-y-scroll overflow-x-hidden flex flex-col gap-4 [&::-webkit-scrollbar]:hidden scrollbar-hide'>
+                <div className=' min-h-1  pt-4 pb-4 rounded-xl overflow-y-scroll overflow-x-hidden flex flex-col gap-4 [&::-webkit-scrollbar]:hidden scrollbar-hide px-2'>
                     {!remoteStream && (
                         <div className='text-center text-gray-500 py-8'>
                             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -354,6 +354,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                             <p>Connect with someone to start chatting</p>
                         </div>
                     )}
+                   
                     {chatMessages.length === 0 && remoteStream && (
                         <div className='text-center text-gray-500 py-8'>
                             <p>Say hello to start the conversation! 👋</p>
