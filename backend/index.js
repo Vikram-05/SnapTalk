@@ -92,6 +92,7 @@ io.on('connection', (socket) => {
     }
 
     waitingUsers.add(socket.id);
+    console.log("Waiting users after skip:", waitingUsers);
     pairUsers();
   });
 

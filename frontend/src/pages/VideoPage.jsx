@@ -150,7 +150,20 @@ function VideoPage() {
         }
     }
 
-  
+    // Set local stream
+    // useEffect(() => {
+    //     if (videoRef1.current && localStream) {
+    //         videoRef1.current.srcObject = localStream;
+    //     }
+    // }, [localStream]);
+
+    // // Set remote stream
+    // useEffect(() => {
+    //     if (videoRef2.current && remoteStream) {
+    //         videoRef2.current.srcObject = remoteStream;
+    //     }
+    // }, [remoteStream]);
+
     const endCall = () => {
         setChatMessages([]);
 
