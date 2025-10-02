@@ -190,7 +190,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
 
                             {/* Stranger video smaller */}
                             <div
-                                className='absolute bottom-4 left-4 border border-gray-300 w-48 h-32 rounded-lg bg-white overflow-hidden cursor-pointer z-[100] shadow-lg hover:scale-105 transition-transform duration-200'
+                                className='absolute bottom-4 left-4 border border-gray-300 w-48 h-32 rounded-lg bg-white overflow-hidden cursor-pointer z-50 shadow-lg hover:scale-105 transition-transform duration-200'
                                 onClick={() => setZoom("stranger")}
                             >
                                 <span className='bg-white/90 text-gray-800 absolute top-2 left-2 px-2 py-1 rounded-full text-xs backdrop-blur-sm z-50 border border-gray-200'>
@@ -229,7 +229,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
 
                             {/* Your video smaller */}
                             <div
-                                className='absolute bottom-4 left-4 border border-gray-300 w-48 h-32 rounded-lg bg-white overflow-hidden cursor-pointer z-[100] shadow-lg hover:scale-105 transition-transform duration-200'
+                                className='absolute bottom-4 left-4 border border-gray-300 w-48 h-32 rounded-lg bg-white overflow-hidden cursor-pointer z-50 shadow-lg hover:scale-105 transition-transform duration-200'
                                 onClick={() => setZoom("you")}
                             >
                                 <span className='bg-white/90 text-gray-800 absolute top-2 left-2 px-2 py-1 rounded-full text-xs backdrop-blur-sm z-50 border border-gray-200'>
@@ -396,7 +396,6 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                         type="text"
                         placeholder="Type a message..."
                         aria-label="Chat message input"
-                        disabled={!remoteStream}
                     />
 
                     {/* Send Button */}
