@@ -110,7 +110,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
     );
 
     return (
-        <div className='h-[100dvh] w-screen  p-0 m-auto md:px-10 gap-2 overflow-x-hidden relative [&::-webkit-scrollbar]:hidden scrollbar-hide bg-gradient-to-br '>
+        <div className='h-[100dvh]  w-screen  p-0 m-auto md:px-10 gap-2 overflow-x-hidden relative [&::-webkit-scrollbar]:hidden scrollbar-hide bg-gradient-to-br '>
 
             {/* Animated Background */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -144,7 +144,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
             <div className='flex justify-between m-auto relative transition-all ease-in-out duration-300 '>
 
                 <div
-                    className={`gap-1 w-full flex flex-wrap justify-center items-center overflow-auto h-[calc(100vh-140px)] 
+                    className={`gap-1 w-full flex flex-wrap justify-center items-center overflow-auto h-[calc(100vh-200px)] 
                     ${isChatOpen ? 'xl:w-[calc(100%-450px)]' : 'm-auto'} 
                     max-h-[calc(100vh-90px)]`}
                 >
@@ -415,7 +415,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
             </div>
 
             {/* Bottom Control Bar */}
-            <div className='fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-center items-center gap-2 px-4 py-3 bg-white/95 backdrop-blur-md rounded-xl border border-gray-200 shadow-lg z-90'>
+            <div className='flex justify-center items-center gap-2 px-4 py-3 bg-white/95 backdrop-blur-md rounded-xl border border-gray-200 shadow-lg z-90'>
 
                 <button
                     onClick={toggleMic}
