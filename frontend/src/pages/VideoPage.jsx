@@ -9,7 +9,8 @@ function VideoPage() {
     const [chatMessages, setChatMessages] = useState([]);
     const [chatInput, setChatInput] = useState("");
 
-
+    // const videoRef1 = useRef(null);
+    // const videoRef2 = useRef(null);
     const socketRef = useRef(null);
     const connectionCreatedRef = useRef(false);
 
