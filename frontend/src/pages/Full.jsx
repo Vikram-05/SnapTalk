@@ -110,7 +110,8 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
     );
 
     return (
-        <div className='h-[100dvh]  w-screen  p-0 m-auto md:px-10 gap-2 overflow-x-hidden relative [&::-webkit-scrollbar]:hidden scrollbar-hide bg-gradient-to-br '>
+        <div className='h-[100dvh] w-screen p-0 m-auto flex flex-col overflow-hidden relative [&::-webkit-scrollbar]:hidden scrollbar-hide bg-gradient-to-br'>
+
 
             {/* Animated Background */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -129,10 +130,10 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
 
                     <div className="flex items-center gap-4">
                         <div className={`px-3 py-1 rounded-full text-sm font-medium ${remoteStream
-                                ? 'bg-green-100 text-green-800 border border-green-200'
-                                : isSearching
-                                    ? 'bg-yellow-100 text-yellow-800 border border-yellow-200'
-                                    : 'bg-blue-100 text-blue-800 border border-blue-200'
+                            ? 'bg-green-100 text-green-800 border border-green-200'
+                            : isSearching
+                                ? 'bg-yellow-100 text-yellow-800 border border-yellow-200'
+                                : 'bg-blue-100 text-blue-800 border border-blue-200'
                             }`}>
                             {remoteStream ? 'Connected' : isSearching ? 'Searching...' : 'Connecting...'}
                         </div>
@@ -141,7 +142,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
             </header>
 
             {/* Main Video Area */}
-            <div className='flex justify-between m-auto relative transition-all ease-in-out duration-300 '>
+            <div className='flex-1 flex justify-center items-center px-4 relative transition-all ease-in-out duration-300'>
 
                 <div
                     className={`gap-1 w-full flex flex-wrap justify-center items-center overflow-auto h-[calc(100vh-200px)] 
@@ -403,8 +404,8 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                         onClick={sendMessage}
                         disabled={!chatInput.trim() || !remoteStream}
                         className={`p-2 sm:p-3 rounded-xl font-bold transition-all duration-200 ${chatInput.trim() && remoteStream
-                                ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                             }`}
                         aria-label="Send message"
                     >
@@ -415,74 +416,76 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
             </div>
 
             {/* Bottom Control Bar */}
-            <div className='flex justify-center items-center gap-2 px-4 py-3 bg-white/95 backdrop-blur-md rounded-xl border border-gray-200 shadow-lg z-90'>
+            <div className='w-full px-4 py-4 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-lg z-50'>
 
-                <button
-                    onClick={toggleMic}
-                    aria-label={isMicOn ? 'Mute microphone' : 'Unmute microphone'}
-                    title={isMicOn ? 'Click to mute' : 'Click to unmute'}
-                    className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${isMicOn ? 'bg-green-100 hover:bg-green-200 text-green-700' : 'bg-red-100 hover:bg-red-200 text-red-700'
-                        } border border-current`}
-                >
-                    <span className='flex items-center gap-2 font-medium text-sm'>
-                        {isMicOn ? <FaMicrophone /> : <BsMicMuteFill />}
-                        <span className='hidden md:flex'>
-                            {isMicOn ? 'Mute' : 'Unmute'}
+                <div className='flex flex-wrap justify-center items-center gap-3 max-w-4xl mx-auto'>
+
+                    <button
+                        onClick={toggleMic}
+                        aria-label={isMicOn ? 'Mute microphone' : 'Unmute microphone'}
+                        title={isMicOn ? 'Click to mute' : 'Click to unmute'}
+                        className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${isMicOn ? 'bg-green-100 hover:bg-green-200 text-green-700' : 'bg-red-100 hover:bg-red-200 text-red-700'
+                            } border border-current`}
+                    >
+                        <span className='flex items-center gap-2 font-medium text-sm'>
+                            {isMicOn ? <FaMicrophone /> : <BsMicMuteFill />}
+                            <span className='hidden md:flex'>
+                                {isMicOn ? 'Mute' : 'Unmute'}
+                            </span>
                         </span>
-                    </span>
-                </button>
+                    </button>
 
-                <button
-                    onClick={toggleCamera}
-                    aria-label={isCameraOn ? 'Turn off camera' : 'Turn on camera'}
-                    title={isCameraOn ? 'Turn off camera' : 'Turn on camera'}
-                    className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${isCameraOn ? 'bg-green-100 hover:bg-green-200 text-green-700' : 'bg-red-100 hover:bg-red-200 text-red-700'
-                        } border border-current`}
-                >
-                    <span className='flex items-center gap-2 font-medium text-sm'>
-                        {isCameraOn ? <BsFillCameraVideoFill /> : <BsFillCameraVideoOffFill />}
-                        <span className='hidden md:flex'>Camera</span>
-                    </span>
-                </button>
+                    <button
+                        onClick={toggleCamera}
+                        aria-label={isCameraOn ? 'Turn off camera' : 'Turn on camera'}
+                        title={isCameraOn ? 'Turn off camera' : 'Turn on camera'}
+                        className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${isCameraOn ? 'bg-green-100 hover:bg-green-200 text-green-700' : 'bg-red-100 hover:bg-red-200 text-red-700'
+                            } border border-current`}
+                    >
+                        <span className='flex items-center gap-2 font-medium text-sm'>
+                            {isCameraOn ? <BsFillCameraVideoFill /> : <BsFillCameraVideoOffFill />}
+                            <span className='hidden md:flex'>Camera</span>
+                        </span>
+                    </button>
 
-                <button
-                    onClick={toggleChat}
-                    aria-label={isChatOpen ? 'Close chat' : 'Open chat'}
-                    title={isChatOpen ? 'Close chat' : 'Open chat'}
-                    className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${isChatOpen ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'
-                        } border border-current hover:bg-blue-200`}
-                >
-                    <span className='flex items-center gap-2 font-medium text-sm'>
-                        <IoIosChatbubbles />
-                        <span className='hidden md:flex'>Chat</span>
-                    </span>
-                </button>
+                    <button
+                        onClick={toggleChat}
+                        aria-label={isChatOpen ? 'Close chat' : 'Open chat'}
+                        title={isChatOpen ? 'Close chat' : 'Open chat'}
+                        className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${isChatOpen ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'
+                            } border border-current hover:bg-blue-200`}
+                    >
+                        <span className='flex items-center gap-2 font-medium text-sm'>
+                            <IoIosChatbubbles />
+                            <span className='hidden md:flex'>Chat</span>
+                        </span>
+                    </button>
 
 
-                <button
-                    onClick={endCall}
-                    aria-label="End call"
-                    title="End call"
-                    className='cursor-pointer py-2 px-3 rounded-lg bg-red-500 hover:bg-red-600 text-white border border-red-500 transition-all duration-200 transform hover:scale-105'
-                >
-                    <span className='flex items-center gap-2 font-medium text-sm'>
-                        <MdOutlineCallEnd />
-                        <span className='hidden md:flex'>End</span>
-                    </span>
-                </button>
+                    <button
+                        onClick={endCall}
+                        aria-label="End call"
+                        title="End call"
+                        className='cursor-pointer py-2 px-3 rounded-lg bg-red-500 hover:bg-red-600 text-white border border-red-500 transition-all duration-200 transform hover:scale-105'
+                    >
+                        <span className='flex items-center gap-2 font-medium text-sm'>
+                            <MdOutlineCallEnd />
+                            <span className='hidden md:flex'>End</span>
+                        </span>
+                    </button>
 
-                <button
-                    onClick={handleSkip}
-                    aria-label="Skip stranger"
-                    title="Skip stranger"
-                    className='cursor-pointer py-2 px-3 rounded-lg bg-yellow-100 hover:bg-yellow-200 text-yellow-700 border border-yellow-300 transition-all duration-200'
-                >
-                    <span className='flex items-center gap-2 font-medium text-sm'>
-                        <IoPlaySkipForward />
-                        <span className=''>Skip</span>
-                    </span>
-                </button>
-
+                    <button
+                        onClick={handleSkip}
+                        aria-label="Skip stranger"
+                        title="Skip stranger"
+                        className='cursor-pointer py-2 px-3 rounded-lg bg-yellow-100 hover:bg-yellow-200 text-yellow-700 border border-yellow-300 transition-all duration-200'
+                    >
+                        <span className='flex items-center gap-2 font-medium text-sm'>
+                            <IoPlaySkipForward />
+                            <span className=''>Skip</span>
+                        </span>
+                    </button>
+                </div>
             </div>
         </div>
     );
