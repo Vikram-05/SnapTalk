@@ -46,12 +46,12 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
         if (localStream) {
             setIsConnecting(false);
             setConnectionStatus("Connected");
-            
+
             // Simulate searching for stranger
             if (!remoteStream) {
                 setIsSearching(true);
                 setConnectionStatus("Searching for stranger...");
-                
+
                 const searchTimer = setTimeout(() => {
                     setIsSearching(false);
                     if (!remoteStream) {
@@ -126,15 +126,14 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                         <h1 className='text-2xl font-bold text-gray-800'>SnapTalk</h1>
                         <p className='text-sm text-gray-600'>Random Video Chat</p>
                     </div>
-                    
+
                     <div className="flex items-center gap-4">
-                        <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                            remoteStream 
-                                ? 'bg-green-100 text-green-800 border border-green-200' 
+                        <div className={`px-3 py-1 rounded-full text-sm font-medium ${remoteStream
+                                ? 'bg-green-100 text-green-800 border border-green-200'
                                 : isSearching
-                                ? 'bg-yellow-100 text-yellow-800 border border-yellow-200'
-                                : 'bg-blue-100 text-blue-800 border border-blue-200'
-                        }`}>
+                                    ? 'bg-yellow-100 text-yellow-800 border border-yellow-200'
+                                    : 'bg-blue-100 text-blue-800 border border-blue-200'
+                            }`}>
                             {remoteStream ? 'Connected' : isSearching ? 'Searching...' : 'Connecting...'}
                         </div>
                     </div>
@@ -153,7 +152,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                     {zoom === "you" && (
                         <div className='h-full w-full relative shadow-lg border border-gray-300 min-w-[300px] max-w-[450px] aspect-video rounded-xl bg-white overflow-hidden'>
                             {isConnecting && <ConnectionLoader />}
-                            
+
                             <div className='w-full h-full relative'>
                                 <span className='bg-white/90 text-gray-800 absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm z-50 border border-gray-200'>
                                     You
@@ -176,13 +175,13 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                                 >
                                     <MdZoomOutMap className='text-xl' />
                                 </button>
-                                
+
                                 {isCameraOn && localStream ? (
-                                    <video 
-                                        ref={videoRef1} 
-                                        autoPlay 
-                                        muted 
-                                        className='w-full h-full object-cover scale-x-[-1]' 
+                                    <video
+                                        ref={videoRef1}
+                                        autoPlay
+                                        muted
+                                        className='w-full h-full object-cover scale-x-[-1]'
                                     />
                                 ) : (
                                     <VideoPlaceholder type="you" />
@@ -210,7 +209,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                     {zoom === "stranger" && (
                         <div className='h-full w-full relative shadow-lg border border-gray-300 min-w-[300px] max-w-[450px] aspect-video rounded-xl bg-white overflow-hidden'>
                             {isConnecting && <ConnectionLoader />}
-                            
+
                             <div className='w-full h-full relative z-50'>
                                 <span className='bg-white/90 text-gray-800 absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm z-50 border border-gray-200'>
                                     Stranger
@@ -263,7 +262,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                             {/* Your Video */}
                             <div className=' relative shadow-lg  border-gray-300 w-[100%] h-[48%] md:w-1/2 min-w-[300px] max-w-[450px] aspect-video rounded-xl bg-white overflow-hidden'>
                                 {isConnecting && <ConnectionLoader />}
-                                
+
                                 <span className='bg-white/90 text-gray-800 absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm z-50 border border-gray-200'>
                                     You
                                 </span>
@@ -298,7 +297,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                             {/* Stranger Video */}
                             <div className='relative shadow-lg border border-gray-300 w-full h-[48%] md:w-1/2 min-w-[300px] max-w-[450px] aspect-video rounded-xl bg-white overflow-hidden'>
                                 {isConnecting && <ConnectionLoader />}
-                                
+
                                 <span className='bg-white/90 text-gray-800 absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm z-50 border border-gray-200'>
                                     Stranger
                                 </span>
@@ -379,50 +378,52 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                 </div>
 
                 {/* Chat input */}
-                <div className='gap-3 flex justify-between items-center p-3 bg-gray-50 rounded-xl border border-gray-200'>
+                <div className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 items-center justify-between border border-gray-200 p-2 sm:p-3 bg-gray-50 rounded-xl w-full">
+                    {/* Emoji Button */}
                     <button
-                        className="cursor-pointer p-3 rounded-xl bg-white hover:bg-gray-100 transition-colors border border-gray-200"
+                        className="p-2 sm:p-3 rounded-xl bg-white hover:bg-gray-100 transition-colors border border-gray-200"
                         aria-label="Insert emoji"
                     >
-                        <BsEmojiSmile className="text-xl text-gray-600" />
+                        <BsEmojiSmile className="text-lg sm:text-xl text-gray-600" />
                     </button>
 
+                    {/* Chat Input */}
                     <input
                         value={chatInput}
                         onChange={(e) => setChatInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                        className="flex-1 bg-transparent border-none text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-0 px-2 py-2"
-                        type='text'
-                        placeholder='Type a message...'
+                        className="flex-1 min-w-[150px] bg-transparent border-none text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-0 px-2 py-1 sm:py-2"
+                        type="text"
+                        placeholder="Type a message..."
                         aria-label="Chat message input"
                         disabled={!remoteStream}
                     />
 
+                    {/* Send Button */}
                     <button
                         onClick={sendMessage}
                         disabled={!chatInput.trim() || !remoteStream}
-                        className={`cursor-pointer font-bold p-3 rounded-xl transition-all duration-200 ${
-                            chatInput.trim() && remoteStream 
-                                ? 'bg-blue-500 hover:bg-blue-600 text-white' 
+                        className={`p-2 sm:p-3 rounded-xl font-bold transition-all duration-200 ${chatInput.trim() && remoteStream
+                                ? 'bg-blue-500 hover:bg-blue-600 text-white'
                                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                        }`}
+                            }`}
                         aria-label="Send message"
                     >
-                        <IoIosSend className="text-xl" />
+                        <IoIosSend className="text-lg sm:text-xl" />
                     </button>
                 </div>
+
             </div>
 
             {/* Bottom Control Bar */}
-            <div className='fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-center items-center gap-2 px-4 py-3 bg-white/95 backdrop-blur-md rounded-xl border border-gray-200 shadow-lg'>
+            <div className='fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-center items-center gap-2 px-4 py-3 bg-white/95 backdrop-blur-md rounded-xl border border-gray-200 shadow-lg z-90'>
 
                 <button
                     onClick={toggleMic}
                     aria-label={isMicOn ? 'Mute microphone' : 'Unmute microphone'}
                     title={isMicOn ? 'Click to mute' : 'Click to unmute'}
-                    className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${
-                        isMicOn ? 'bg-green-100 hover:bg-green-200 text-green-700' : 'bg-red-100 hover:bg-red-200 text-red-700'
-                    } border border-current`}
+                    className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${isMicOn ? 'bg-green-100 hover:bg-green-200 text-green-700' : 'bg-red-100 hover:bg-red-200 text-red-700'
+                        } border border-current`}
                 >
                     <span className='flex items-center gap-2 font-medium text-sm'>
                         {isMicOn ? <FaMicrophone /> : <BsMicMuteFill />}
@@ -436,9 +437,8 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                     onClick={toggleCamera}
                     aria-label={isCameraOn ? 'Turn off camera' : 'Turn on camera'}
                     title={isCameraOn ? 'Turn off camera' : 'Turn on camera'}
-                    className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${
-                        isCameraOn ? 'bg-green-100 hover:bg-green-200 text-green-700' : 'bg-red-100 hover:bg-red-200 text-red-700'
-                    } border border-current`}
+                    className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${isCameraOn ? 'bg-green-100 hover:bg-green-200 text-green-700' : 'bg-red-100 hover:bg-red-200 text-red-700'
+                        } border border-current`}
                 >
                     <span className='flex items-center gap-2 font-medium text-sm'>
                         {isCameraOn ? <BsFillCameraVideoFill /> : <BsFillCameraVideoOffFill />}
@@ -450,9 +450,8 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                     onClick={toggleChat}
                     aria-label={isChatOpen ? 'Close chat' : 'Open chat'}
                     title={isChatOpen ? 'Close chat' : 'Open chat'}
-                    className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${
-                        isChatOpen ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'
-                    } border border-current hover:bg-blue-200`}
+                    className={`cursor-pointer py-2 px-3 rounded-lg transition-all duration-200 ${isChatOpen ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'
+                        } border border-current hover:bg-blue-200`}
                 >
                     <span className='flex items-center gap-2 font-medium text-sm'>
                         <IoIosChatbubbles />
@@ -460,7 +459,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                     </span>
                 </button>
 
-                
+
                 <button
                     onClick={endCall}
                     aria-label="End call"
