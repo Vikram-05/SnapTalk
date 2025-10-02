@@ -12,16 +12,18 @@ import { IoClose } from "react-icons/io5";
 import { IoIosChatbubbles } from "react-icons/io";
 import { MdZoomOutMap } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import EmojiPicker from 'emoji-picker-react';
 
 function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput, sendMessage, handleSkip, endCall, toggleCamera, toggleMic, isCameraOn, isMicOn }) {
     const navigate = useNavigate();
 
     const videoRef1 = useRef(null);
     const videoRef2 = useRef(null);
-    const [isChatOpen, setIsChatOpen] = useState(true);
+    const [isChatOpen, setIsChatOpen] = useState(false);
     const [zoom, setZoom] = useState("");
     const [isConnecting, setIsConnecting] = useState(true);
     const [isSearching, setIsSearching] = useState(false);
+    const [emojiPicker, setEmojiPicker] = useState(false);
     const [connectionStatus, setConnectionStatus] = useState("Connecting...");
 
     const toggleChat = () => {
@@ -354,7 +356,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                             <p>Connect with someone to start chatting</p>
                         </div>
                     )}
-                   
+
                     {chatMessages.length === 0 && remoteStream && (
                         <div className='text-center text-gray-500 py-8'>
                             <p>Say hello to start the conversation! 👋</p>
@@ -380,39 +382,60 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                 </div>
 
                 {/* Chat input */}
-                <div className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 items-center justify-between border border-gray-200 p-2 sm:p-3 bg-gray-50 rounded-xl w-full">
-                    {/* Emoji Button */}
-                    <button
-                        className="p-2 sm:p-3 rounded-xl bg-white hover:bg-gray-100 transition-colors border border-gray-200"
-                        aria-label="Insert emoji"
-                    >
-                        <BsEmojiSmile className="text-lg sm:text-xl text-gray-600" />
-                    </button>
+                <div className="relative w-full">
+                    <div className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 items-center justify-between border border-gray-200 p-2 sm:p-3 bg-gray-50 rounded-xl w-full">
 
-                    {/* Chat Input */}
-                    <input
-                        value={chatInput}
-                        onChange={(e) => setChatInput(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                        className="flex-1 min-w-[150px] bg-transparent border-none text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-0 px-2 py-1 sm:py-2"
-                        type="text"
-                        placeholder="Type a message..."
-                        aria-label="Chat message input"
-                    />
+                        {/* Emoji Button */}
+                        <div className="relative">
+                            <button
+                                onClick={() => setEmojiPicker(prev => !prev)}
+                                className="p-2 cursor-pointer sm:p-3 rounded-xl bg-white hover:bg-gray-100 transition-colors border border-gray-200"
+                                aria-label="Insert emoji"
+                            >
+                                <BsEmojiSmile className="text-lg sm:text-xl text-gray-600" />
+                            </button>
 
-                    {/* Send Button */}
-                    <button
-                        onClick={sendMessage}
-                        disabled={!chatInput.trim() || !remoteStream}
-                        className={`p-2 sm:p-3 rounded-xl font-bold transition-all duration-200 ${chatInput.trim() && remoteStream
-                            ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                            }`}
-                        aria-label="Send message"
-                    >
-                        <IoIosSend className="text-lg sm:text-xl" />
-                    </button>
+                            {/* Emoji Picker */}
+                            {emojiPicker && (
+                                <div className="absolute bottom-full mb-4 left-0 z-50">
+                                    <EmojiPicker
+                                        onEmojiClick={(e) => {
+                                            setChatInput(prev => prev + e.emoji);
+                                            setEmojiPicker(false); // auto-close after selection (optional)
+                                        }}
+                                        height={350}
+                                        width={300}
+                                    />
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Chat Input */}
+                        <input
+                            value={chatInput}
+                            onChange={(e) => setChatInput(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                            className="flex-1 min-w-[150px] bg-transparent border-none text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-0 px-2 py-1 sm:py-2"
+                            type="text"
+                            placeholder="Type a message..."
+                            aria-label="Chat message input"
+                        />
+
+                        {/* Send Button */}
+                        <button
+                            onClick={sendMessage}
+                            disabled={!chatInput.trim() || !remoteStream}
+                            className={`p-2 sm:p-3 rounded-xl font-bold transition-all duration-200 ${chatInput.trim() && remoteStream
+                                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                }`}
+                            aria-label="Send message"
+                        >
+                            <IoIosSend className="text-lg sm:text-xl" />
+                        </button>
+                    </div>
                 </div>
+
 
             </div>
 
