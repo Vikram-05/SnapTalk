@@ -182,16 +182,26 @@ function VideoPage() {
     };
 
 
-    const handleSkip = () => {
-        if (socketRef.current) {
-            socketRef.current.emit("skip");
-            if (peerConnection) peerConnection.close();
-            connectionCreatedRef.current = false;
-            setRemoteStream(null);
-            setChatMessages([]);
+    const handleSkip = async () => {
+    if (socketRef.current) {
+        socketRef.current.emit("skip");
+    }
 
-        }
-    };
+    if (peerConnection) {
+        peerConnection.close();
+    }
+
+    setRemoteStream(null);
+    setChatMessages([]);
+    connectionCreatedRef.current = false;
+
+    // Small delay before recreating peer connection and offer
+    setTimeout(() => {
+        CreateOfferandConnect(socketRef.current, localStream, setRemoteStream);
+        connectionCreatedRef.current = true;
+    }, 500);
+};
+
 
     const sendMessage = () => {
         if (chatInput.trim() && socketRef.current) {

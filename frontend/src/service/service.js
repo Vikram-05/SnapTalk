@@ -29,53 +29,47 @@ const ICE_SERVERS = {
 export let peerConnection;
 
 export const CreateOfferandConnect = async (socket, localStream, setRemoteStream) => {
-    try {
-        // Close existing connection if any
-        if (peerConnection) {
-            peerConnection.close();
-        }
+  try {
+    if (!peerConnection || peerConnection.signalingState === 'closed') {
+      // Create new peer connection
+      peerConnection = new RTCPeerConnection(ICE_SERVERS);
 
-        // Create new peer connection
-        peerConnection = new RTCPeerConnection(ICE_SERVERS);
+      // Add tracks
+      localStream.getTracks().forEach(track => {
+        peerConnection.addTrack(track, localStream);
+      });
 
-        // Add local tracks to connection
-        localStream.getTracks().forEach(track => {
-            peerConnection.addTrack(track, localStream);
+      // Setup event handlers
+      const remoteStream = new MediaStream();
+      peerConnection.ontrack = (event) => {
+        event.streams[0].getTracks().forEach(track => {
+          remoteStream.addTrack(track);
         });
+        setRemoteStream(remoteStream);
+      };
 
-        // Handle incoming remote stream
-        const remoteStream = new MediaStream();
-        peerConnection.ontrack = (event) => {
-            console.log("Received remote track:", event.track.kind);
-            event.streams[0].getTracks().forEach(track => {
-                remoteStream.addTrack(track);
-            });
-            setRemoteStream(remoteStream);
-        };
+      peerConnection.onicecandidate = (event) => {
+        if (event.candidate) {
+          socket.emit("candidate", event.candidate);
+        }
+      };
 
-        // Handle ICE candidates
-        peerConnection.onicecandidate = (event) => {
-            if (event.candidate) {
-                console.log("Sending ICE candidate: ", event.candidate);
-                socket.emit("candidate", event.candidate);
-            }
-        };
-
-        // Handle connection state changes
-        peerConnection.onconnectionstatechange = () => {
-            console.log("Connection state:", peerConnection.connectionState);
-            if (peerConnection.connectionState === 'connected') {
-                console.log("Peers connected!");
-            }
-        };
-
-        // Create and send offer
-        const offer = await peerConnection.createOffer();
-        await peerConnection.setLocalDescription(offer);
-        socket.emit("offer", offer);
-        console.log("Offer created and sent: ", offer);
-
-    } catch (error) {
-        console.error('Error creating offer and connecting:', error);
+      peerConnection.onconnectionstatechange = () => {
+        console.log("Connection state:", peerConnection.connectionState);
+      };
+    } else {
+      // Optional: restart ICE on existing connection if needed
+      console.log("Restarting ICE on existing peer connection");
+      await peerConnection.restartIce();
     }
+
+    // Create offer and set local description
+    const offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(offer);
+    socket.emit("offer", offer);
+    console.log("Offer created and sent: ", offer);
+
+  } catch (error) {
+    console.error('Error creating offer and connecting:', error);
+  }
 };

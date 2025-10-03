@@ -12,7 +12,7 @@ const io = new Server(server, {
 });
 
 let waitingUsers = new Set();
-let pairedUsers = new Map(); // socket.id => partnerId
+let pairedUsers = new Map(); 
 
 function pairUsers() {
   const users = Array.from(waitingUsers);
