@@ -20,6 +20,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
 
     const videoRef1 = useRef(null);
     const videoRef2 = useRef(null);
+    const containerRef = useRef(null);
 
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [zoom, setZoom] = useState("");
@@ -31,6 +32,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
     const toggleChat = () => {
         setIsChatOpen((prev) => !prev);
     };
+
 
     // Fix camera toggle issue - ensure video stream is properly attached
     useEffect(() => {
@@ -46,6 +48,11 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
     }, [remoteStream, zoom]);
 
 
+    useEffect(() => {
+        if (containerRef.current) {
+            containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        }
+    }, [chatMessages]);
 
 
     // Simulate connection process
@@ -353,9 +360,15 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                 </div>
 
                 {/* Chat messages */}
-                <div className='flex-grow  rounded-xl overflow-y-scroll overflow-x-hidden flex flex-col gap-2 [&::-webkit-scrollbar]:hidden scrollbar-hide  justify-end  '>
-                    {(!remoteStream && chatMessages.length == 0 ) && (
-                        <div className=' flex items-center justify-center flex-col text-center text-gray-500 py-8  h-full w-full'>
+                <div
+                    ref={containerRef}
+                    className="flex-grow h-[400px] rounded-xl overflow-y-scroll overflow-x-hidden flex flex-col gap-2  scrollbar-hide "
+                    style={{
+                        scrollbarWidth: 'none', 
+                        msOverflowStyle: 'none' 
+                    }}>
+                    {(!remoteStream && chatMessages.length === 0) && (
+                        <div className="flex items-center justify-center flex-col text-center text-gray-500 py-8 h-full w-full">
                             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <IoIosChatbubbles className="text-2xl text-gray-400" />
                             </div>
@@ -364,30 +377,28 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                     )}
 
                     {chatMessages.length === 0 && remoteStream && (
-                        <div className='text-center text-gray-500 py-8'>
+                        <div className="text-center text-gray-500 py-8">
                             <p>Say hello to start the conversation! 👋</p>
                         </div>
                     )}
 
                     {chatMessages.map((msg, idx) =>
                         msg.from === 'You' ? (
-                            <div key={idx} className='flex justify-end flex-col items-end gap-1'>
-                                <span className='text-xs text-gray-500 px-2'>You</span>
-                                <div className='bg-blue-500 text-white px-4 py-2 rounded-2xl rounded-tr-none max-w-[80%] break-words shadow-sm'>
+                            <div key={idx} className="flex justify-end flex-col items-end gap-1">
+                                <span className="text-xs text-gray-500 px-2">You</span>
+                                <div className="bg-blue-500 text-white px-4 py-2 rounded-2xl rounded-tr-none max-w-[80%] break-words shadow-sm">
                                     {msg.text}
                                 </div>
                             </div>
                         ) : (
-                            <div key={idx} className='flex justify-start flex-col items-start gap-2'>
-                                <span className='text-xs text-gray-500 px-2'>Stranger</span>
-                                <div className='bg-gray-200 text-gray-800 px-4 py-3 rounded-2xl rounded-tl-none max-w-[80%] break-words shadow-sm'>
+                            <div key={idx} className="flex justify-start flex-col items-start gap-2">
+                                <span className="text-xs text-gray-500 px-2">Stranger</span>
+                                <div className="bg-gray-200 text-gray-800 px-4 py-3 rounded-2xl rounded-tl-none max-w-[80%] break-words shadow-sm">
                                     {msg.text}
                                 </div>
                             </div>
                         )
                     )}
-
-          
                 </div>
 
 
