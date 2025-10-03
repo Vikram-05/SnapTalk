@@ -148,7 +148,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
             <div className='flex-1 flex justify-center items-center md:px-4 relative transition-all ease-in-out duration-300'>
 
                 <div
-                    className={` gap-1 w-full flex flex-wrap justify-center items-center overflow-auto h-[calc(100vh-200px)] 
+                    className={` md:gap-3 w-full flex flex-wrap justify-center items-center overflow-auto h-[calc(100vh-200px)] 
                     ${isChatOpen ? 'xl:w-[calc(100%-450px)]' : 'm-auto'} 
                     max-h-[calc(100vh-90px)]`}
                 >
@@ -264,7 +264,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                     {!zoom && (
                         <>
                             {/* Your Video */}
-                            <div className=' relative shadow-lg  border-gray-300 w-[100%] h-[48%] md:w-1/2 min-w-[300px] max-w-[450px] aspect-video md:rounded-xl bg-white overflow-hidden'>
+                            <div className='relative shadow-lg  border-gray-300 w-[100%] h-1/2 md:h-[48%] md:w-1/2 min-w-[300px] max-w-[450px] aspect-video md:rounded-xl bg-white overflow-hidden'>
                                 {isConnecting && <ConnectionLoader />}
 
                                 <span className='bg-white/90 text-gray-800 absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm z-50 border border-gray-200'>
@@ -299,7 +299,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                             </div>
 
                             {/* Stranger Video */}
-                            <div className='relative shadow-lg border border-gray-300 w-full h-[48%] md:w-1/2 min-w-[300px] max-w-[450px] aspect-video md:rounded-xl bg-white overflow-hidden'>
+                            <div className='relative shadow-lg w-full h-1/2 md:h-[48%] md:w-1/2 min-w-[300px] max-w-[450px] aspect-video md:rounded-xl bg-white overflow-hidden'>
                                 {isConnecting && <ConnectionLoader />}
 
                                 <span className='bg-white/90 text-gray-800 absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm z-50 border border-gray-200'>
