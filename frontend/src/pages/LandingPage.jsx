@@ -29,7 +29,7 @@ const LandingPage = () => {
       {/* Hero Section */}
       <div className="relative flex-1 w-full flex flex-col items-center justify-center px-6 py-16 md:px-20 overflow-hidden">
         {/* Glowing Blurs */}
-        <div className="absolute -top-20 -left-20 w-96 h-96 bg-purple-300/30 blur-[120px] rounded-full z-0"></div>
+        <div className=" absolute -top-20 -left-20 w-96 h-96 bg-purple-300/30 blur-[120px] rounded-full z-0"></div>
         <div className="absolute bottom-10 right-[-60px] w-[400px] h-[400px] bg-blue-300/30 blur-[120px] rounded-full z-0"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-300/20 blur-[100px] rounded-full z-0"></div>
 

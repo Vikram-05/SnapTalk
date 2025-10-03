@@ -109,7 +109,8 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                 )}
             </div>
         </div>
-    );
+       
+    )
 
     return (
         <div className='h-[100dvh] w-screen p-0 m-auto flex flex-col overflow-hidden relative [&::-webkit-scrollbar]:hidden scrollbar-hide bg-gradient-to-br'>
@@ -144,16 +145,16 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
             </header>
 
             {/* Main Video Area */}
-            <div className='flex-1 flex justify-center items-center px-4 relative transition-all ease-in-out duration-300'>
+            <div className='flex-1 flex justify-center items-center md:px-4 relative transition-all ease-in-out duration-300'>
 
                 <div
-                    className={`gap-1 w-full flex flex-wrap justify-center items-center overflow-auto h-[calc(100vh-200px)] 
+                    className={` gap-1 w-full flex flex-wrap justify-center items-center overflow-auto h-[calc(100vh-200px)] 
                     ${isChatOpen ? 'xl:w-[calc(100%-450px)]' : 'm-auto'} 
                     max-h-[calc(100vh-90px)]`}
                 >
                     {/* Zoomed in view - You */}
                     {zoom === "you" && (
-                        <div className='h-full w-full relative shadow-lg border border-gray-300 min-w-[300px] max-w-[450px] aspect-video rounded-xl bg-white overflow-hidden'>
+                        <div className='h-full w-full relative shadow-lg border border-gray-300 min-w-[300px] max-w-[450px] aspect-video md:rounded-xl bg-white overflow-hidden'>
                             {isConnecting && <ConnectionLoader />}
 
                             <div className='w-full h-full relative'>
@@ -210,7 +211,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
 
                     {/* Zoomed in view - Stranger */}
                     {zoom === "stranger" && (
-                        <div className='h-full w-full relative shadow-lg border border-gray-300 min-w-[300px] max-w-[450px] aspect-video rounded-xl bg-white overflow-hidden'>
+                        <div className='h-full w-full relative shadow-lg border border-gray-300 min-w-[300px] max-w-[450px] aspect-video md:rounded-xl bg-white overflow-hidden'>
                             {isConnecting && <ConnectionLoader />}
 
                             <div className='w-full h-full relative z-50'>
@@ -263,7 +264,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                     {!zoom && (
                         <>
                             {/* Your Video */}
-                            <div className=' relative shadow-lg  border-gray-300 w-[100%] h-[48%] md:w-1/2 min-w-[300px] max-w-[450px] aspect-video rounded-xl bg-white overflow-hidden'>
+                            <div className=' relative shadow-lg  border-gray-300 w-[100%] h-[48%] md:w-1/2 min-w-[300px] max-w-[450px] aspect-video md:rounded-xl bg-white overflow-hidden'>
                                 {isConnecting && <ConnectionLoader />}
 
                                 <span className='bg-white/90 text-gray-800 absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm z-50 border border-gray-200'>
@@ -298,7 +299,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                             </div>
 
                             {/* Stranger Video */}
-                            <div className='relative shadow-lg border border-gray-300 w-full h-[48%] md:w-1/2 min-w-[300px] max-w-[450px] aspect-video rounded-xl bg-white overflow-hidden'>
+                            <div className='relative shadow-lg border border-gray-300 w-full h-[48%] md:w-1/2 min-w-[300px] max-w-[450px] aspect-video md:rounded-xl bg-white overflow-hidden'>
                                 {isConnecting && <ConnectionLoader />}
 
                                 <span className='bg-white/90 text-gray-800 absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm z-50 border border-gray-200'>
@@ -401,7 +402,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                                     <EmojiPicker
                                         onEmojiClick={(e) => {
                                             setChatInput(prev => prev + e.emoji);
-                                            setEmojiPicker(false); // auto-close after selection (optional)
+                                            setEmojiPicker(false); 
                                         }}
                                         height={350}
                                         width={300}
