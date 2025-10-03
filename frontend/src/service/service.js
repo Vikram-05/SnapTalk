@@ -4,7 +4,11 @@ let socket;
 
 export const getSocket = () => {
     if (!socket) {
-        socket = io(`${import.meta.env.VITE_BACKEND_URL}`);
+        socket = io(`${import.meta.env.VITE_BACKEND_URL}`, {
+            transports: ['websocket'],
+            secure: true
+        });
+
     }
     return socket;
 };
@@ -13,9 +17,14 @@ export const getSocket = () => {
 const ICE_SERVERS = {
     iceServers: [
         { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'stun:stun1.l.google.com:19302' },
-    ],
+        {
+            urls: 'turn:openrelay.metered.ca:80',
+            username: 'openrelayproject',
+            credential: 'openrelayproject'
+        }
+    ]
 };
+
 
 export let peerConnection;
 

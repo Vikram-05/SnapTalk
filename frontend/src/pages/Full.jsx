@@ -213,7 +213,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                                     Stranger
                                 </span>
                                 {remoteStream ? (
-                                    <video ref={videoRef2} autoPlay className='w-full h-full object-cover scale-x-[-1]' />
+                                    <video ref={videoRef2} autoPlay playsInline className='w-full h-full object-cover scale-x-[-1]' />
                                 ) : (
                                     <VideoPlaceholder type="stranger" />
                                 )}
@@ -237,7 +237,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                                     <MdZoomOutMap className='text-xl' />
                                 </button>
                                 {remoteStream ? (
-                                    <video ref={videoRef2} autoPlay className='w-full h-full object-cover scale-x-[-1]' />
+                                    <video ref={videoRef2} autoPlay playsInline className='w-full h-full object-cover scale-x-[-1]' />
                                 ) : (
                                     <VideoPlaceholder type="stranger" />
                                 )}
@@ -264,7 +264,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                                     )}
                                 </div>
                                 {isCameraOn && localStream ? (
-                                    <video ref={videoRef1} autoPlay muted className='w-full h-full object-cover scale-x-[-1]' />
+                                    <video ref={videoRef1} autoPlay playsInline className='w-full h-full object-cover scale-x-[-1]' />
                                 ) : (
                                     <VideoPlaceholder type="you" />
                                 )}
@@ -304,7 +304,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                                 </button>
 
                                 {isCameraOn && localStream ? (
-                                    <video ref={videoRef1} autoPlay muted className='w-full h-full object-cover scale-x-[-1]' />
+                                    <video ref={videoRef1} autoPlay playsInline className='w-full h-full object-cover scale-x-[-1]' />
                                 ) : (
                                     <VideoPlaceholder type="you" />
                                 )}
