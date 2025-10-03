@@ -12,7 +12,7 @@ const io = new Server(server, {
 });
 
 let waitingUsers = new Set();
-let pairedUsers = new Map(); 
+let pairedUsers = new Map(); // socket.id => partnerId
 
 function pairUsers() {
   const users = Array.from(waitingUsers);
@@ -26,10 +26,8 @@ function pairUsers() {
     pairedUsers.set(user1, user2);
     pairedUsers.set(user2, user1);
 
-    // Choose one as caller, one as callee
-    io.to(user1).emit("partner-found", { partnerId: user2, initiator: true });
-    io.to(user2).emit("partner-found", { partnerId: user1, initiator: false });
-
+    io.to(user1).emit("partner-found", { partnerId: user2 });
+    io.to(user2).emit("partner-found", { partnerId: user1 });
 
     console.log(`Paired: ${user1} <--> ${user2}`);
   }
@@ -77,9 +75,9 @@ io.on('connection', (socket) => {
   socket.on("chat-message", (data) => {
     const partnerId = pairedUsers.get(socket.id);
     if (partnerId && io.sockets.sockets.has(partnerId)) {
-      io.to(partnerId).emit("chat-message", data);
+        io.to(partnerId).emit("chat-message", data);
     }
-  });
+});
 
 
   socket.on("skip", () => {
