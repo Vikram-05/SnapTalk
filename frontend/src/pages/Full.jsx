@@ -17,8 +17,10 @@ import EmojiPicker from 'emoji-picker-react';
 function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput, sendMessage, handleSkip, endCall, toggleCamera, toggleMic, isCameraOn, isMicOn }) {
     const navigate = useNavigate();
 
+
     const videoRef1 = useRef(null);
     const videoRef2 = useRef(null);
+
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [zoom, setZoom] = useState("");
     const [isConnecting, setIsConnecting] = useState(true);
@@ -42,6 +44,9 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
             videoRef2.current.srcObject = remoteStream;
         }
     }, [remoteStream, zoom]);
+
+
+
 
     // Simulate connection process
     useEffect(() => {
@@ -109,7 +114,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                 )}
             </div>
         </div>
-       
+
     )
 
     return (
@@ -327,7 +332,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
             {/* Chat Box */}
             <div
                 className={`transition-all duration-300 ease-in-out absolute top-0 right-0 shadow-lg flex flex-col justify-between w-[100%] md:max-w-[450px] h-[100dvh] overflow-hidden rounded-l-xl px-4 gap-3 z-[150] pb-4 bg-white border-l border-gray-200
-                    ${isChatOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
+                    ${isChatOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'} `}
             >
 
                 {/* Chat Header */}
@@ -348,9 +353,9 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                 </div>
 
                 {/* Chat messages */}
-                <div className=' min-h-1  pt-4 pb-4 rounded-xl overflow-y-scroll overflow-x-hidden flex flex-col gap-4 [&::-webkit-scrollbar]:hidden scrollbar-hide px-2'>
-                    {!remoteStream && (
-                        <div className='text-center text-gray-500 py-8'>
+                <div className='flex-grow  rounded-xl overflow-y-scroll overflow-x-hidden flex flex-col gap-2 [&::-webkit-scrollbar]:hidden scrollbar-hide  justify-end  '>
+                    {(!remoteStream && chatMessages.length == 0 ) && (
+                        <div className=' flex items-center justify-center flex-col text-center text-gray-500 py-8  h-full w-full'>
                             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <IoIosChatbubbles className="text-2xl text-gray-400" />
                             </div>
@@ -363,11 +368,12 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                             <p>Say hello to start the conversation! 👋</p>
                         </div>
                     )}
+
                     {chatMessages.map((msg, idx) =>
                         msg.from === 'You' ? (
-                            <div key={idx} className='flex justify-end flex-col items-end gap-2'>
+                            <div key={idx} className='flex justify-end flex-col items-end gap-1'>
                                 <span className='text-xs text-gray-500 px-2'>You</span>
-                                <div className='bg-blue-500 text-white px-4 py-3 rounded-2xl rounded-tr-none max-w-[80%] break-words shadow-sm'>
+                                <div className='bg-blue-500 text-white px-4 py-2 rounded-2xl rounded-tr-none max-w-[80%] break-words shadow-sm'>
                                     {msg.text}
                                 </div>
                             </div>
@@ -380,7 +386,10 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                             </div>
                         )
                     )}
+
+          
                 </div>
+
 
                 {/* Chat input */}
                 <div className="relative w-full">
@@ -402,7 +411,7 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                                     <EmojiPicker
                                         onEmojiClick={(e) => {
                                             setChatInput(prev => prev + e.emoji);
-                                            setEmojiPicker(false); 
+                                            setEmojiPicker(false);
                                         }}
                                         height={350}
                                         width={300}
@@ -427,8 +436,8 @@ function Full({ localStream, remoteStream, chatMessages, chatInput, setChatInput
                             onClick={sendMessage}
                             disabled={!chatInput.trim() || !remoteStream}
                             className={`p-2 sm:p-3 rounded-xl font-bold transition-all duration-200 ${chatInput.trim() && remoteStream
-                                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                 }`}
                             aria-label="Send message"
                         >
