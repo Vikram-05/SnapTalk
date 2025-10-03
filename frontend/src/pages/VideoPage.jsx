@@ -13,6 +13,7 @@ function VideoPage() {
     // const videoRef2 = useRef(null);
     const socketRef = useRef(null);
     const connectionCreatedRef = useRef(false);
+    const pendingCandidates = useRef([]);
 
     const [isCameraOn, setIsCameraOn] = useState(true);
     const [isMicOn, setIsMicOn] = useState(true);
@@ -71,6 +72,7 @@ function VideoPage() {
             try {
                 if (peerConnection && peerConnection.signalingState === "have-local-offer") {
                     await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+                    await addBufferedCandidates();
                 }
             } catch (error) {
                 console.error("Error handling received answer: ", error);
@@ -81,7 +83,11 @@ function VideoPage() {
             console.log("Received ICE candidate: ", candidate);
             try {
                 if (peerConnection) {
-                    await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+                    if (peerConnection.remoteDescription && peerConnection.remoteDescription.type) {
+                        await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+                    } else {
+                        pendingCandidates.current.push(candidate);
+                    }
                 }
             } catch (error) {
                 console.error("Error adding received ICE candidate: ", error);
@@ -185,12 +191,17 @@ function VideoPage() {
     const handleSkip = () => {
         if (socketRef.current) {
             socketRef.current.emit("skip");
-            if (peerConnection) peerConnection.close();
-            connectionCreatedRef.current = false;
-            setRemoteStream(null);
-            setChatMessages([]);
-
         }
+        if (peerConnection) {
+            peerConnection.onicecandidate = null;
+            peerConnection.ontrack = null;
+            peerConnection.onconnectionstatechange = null;
+            peerConnection.close();
+        }
+        setRemoteStream(null);
+        setChatMessages([]);
+        connectionCreatedRef.current = false;
+        pendingCandidates.current = [];
     };
 
     const sendMessage = () => {
@@ -202,7 +213,16 @@ function VideoPage() {
         }
     };
 
-
+    const addBufferedCandidates = async () => {
+        for (const candidate of pendingCandidates.current) {
+            try {
+                await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+            } catch (err) {
+                console.error("Error adding buffered ICE candidate:", err);
+            }
+        }
+        pendingCandidates.current = [];
+    };
 
     return (
         <>
